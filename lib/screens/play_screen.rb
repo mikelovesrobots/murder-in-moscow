@@ -7,11 +7,14 @@ class PlayScreen < MimScreen::Base
     [:messages_screen, :map_screen, :status_screen].each do |attr|
       dim = send("#{attr}_dimensions")
 
-      #debugger
       send("#{attr}=", returning(screen.subwin(dim[:lines], dim[:cols], dim[:y], dim[:x])) do |sub_screen|
         sub_screen.border(0,0,0,0,0,0,0,0)
       end)
     end
+
+    messages_screen.scrollok(true)
+    screen.keypad(true)
+    screen.refresh
   end
 
   def before_destroy_screen
@@ -22,7 +25,22 @@ class PlayScreen < MimScreen::Base
 
   def main_loop(screen)
     # wait for a keystroke
-    screen.getch 
+    loop do
+      messages_screen.refresh
+      case key = screen.getch 
+      when Ncurses::KEY_DOWN
+        messages_screen.addstr("down\n")
+      when Ncurses::KEY_UP
+        messages_screen.addstr("up\n")
+      when Ncurses::KEY_RIGHT
+        messages_screen.addstr("right\n")
+      when Ncurses::KEY_LEFT
+        messages_screen.addstr("left\n")
+      else 
+        # we're done, exit
+        break
+      end
+    end
   end
 
   private
