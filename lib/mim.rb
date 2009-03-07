@@ -28,14 +28,17 @@ module Mim
   def self.initialize_game(window)
     messages_window = window.subwin(4,max_columns(window),0,0) # h, w, y, x
     messages_window.bkgd Ncurses.COLOR_PAIR(2)
+    messages_window.border(0,0,0,0,0,0,0,0)
     messages_window.addstr "Hello, from the messages window."
 
     map_window = window.subwin(27,90,4,1)
     map_window.bkgd Ncurses.COLOR_PAIR(3)
+    map_window.border(0,0,0,0,0,0,0,0)
     map_window.addstr "Hello from the map window"
 
     status_window = window.subwin(27, (max_columns(window) - 90 - 3), 4, 92)
     status_window.bkgd Ncurses.COLOR_PAIR(4)
+    status_window.border(0,0,0,0,0,0,0,0)
     status_window.addstr "Hello from the status window"
     #window.addstr "Hello from the top window"
     window.refresh
@@ -54,6 +57,7 @@ module Mim
     lines = []
     columns = []
     window.getmaxyx(lines, columns)
+
     columns.first
   end
 end
