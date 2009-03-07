@@ -1,0 +1,25 @@
+7DRL Attempt: Murder in Moscow
+
+Murder in Moscow will be a supernatural RL set in the afterlife.
+
+Naively Hopeful Features:
+
+* Play as an angel or demon 
+* Crawl up to heaven or down to hell
+* Rooms have words embedded in the walls  (e.g., XMURDERXX+XXXXRAGEXX)
+* Ghosts say phrases extracted from Twitter
+* Standard stuff (items, monsters, fighting, magic)
+
+I'm going to build it in ruby using ncurses. (By the way, last night,
+I discovered a fantastic set of ruby ncurses examples at: 
+http://github.com/zdennis/ncurses_examples/tree/master )
+
+This will be my third roguelike attempt.   The first two were
+failures, attempted in secret.  We'll see how this one goes.
+
+You can follow the development on github if you like:
+
+http://github.com/mikelovesrobots/murder-in-moscow/tree/master
+
+- Mike Judge
+
