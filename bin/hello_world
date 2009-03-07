@@ -1,0 +1,17 @@
+#!/usr/bin/env ruby
+
+require 'ncurses'
+
+begin
+  window = Ncurses.initscr
+  Ncurses.cbreak
+  "Murder in Moscow".each_byte do |ch|
+    window.addch ch
+    window.refresh
+    Ncurses.napms 100 # refreshes every 1/10th of a second
+  end
+  window.getch
+ensure
+  Ncurses.endwin
+end
+
