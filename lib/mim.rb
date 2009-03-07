@@ -1,14 +1,27 @@
-module Mim
+$LOAD_PATH << File.expand_path(File.dirname(__FILE__))
+
+require 'mim_screen'
+require 'screens/menu_screen'
+
+class Mim
+  def initialize
+    ncurses do |window|
+      MenuScreen.new window
+    end
+  end
+
+  private
+
   # initializes ncurses and yields up the current window.  Ensures 
   # in the case of errors that ncurses shuts down cleanly.
   #
-  #   Mim.initialize_ncurses do |window|
-  #     window.addstr "Murder in Moscow"
-  #     window.refresh
-  #     window.getch
+  #   Mim.new 
+  #     ncurses do |window|
+  #       MenuScreen.new window
+  #     end
   #   end
   #
-  def self.initialize_ncurses
+  def ncurses
     begin
       window = Ncurses.initscr
       Ncurses.cbreak
@@ -23,42 +36,6 @@ module Mim
     ensure
       Ncurses.endwin
     end
-  end
-
-  def self.initialize_game(window)
-    messages_window = window.subwin(4,max_columns(window),0,0) # h, w, y, x
-    messages_window.bkgd Ncurses.COLOR_PAIR(2)
-    messages_window.border(0,0,0,0,0,0,0,0)
-    messages_window.addstr "Hello, from the messages window."
-
-    map_window = window.subwin(27,90,4,1)
-    map_window.bkgd Ncurses.COLOR_PAIR(3)
-    map_window.border(0,0,0,0,0,0,0,0)
-    map_window.addstr "Hello from the map window"
-
-    status_window = window.subwin(27, (max_columns(window) - 90 - 3), 4, 92)
-    status_window.bkgd Ncurses.COLOR_PAIR(4)
-    status_window.border(0,0,0,0,0,0,0,0)
-    status_window.addstr "Hello from the status window"
-    #window.addstr "Hello from the top window"
-    window.refresh
-    window.getch
-  end
-
-  def self.max_lines(window)
-    lines = []
-    columns = []
-    window.getmaxyx(lines, columns)
-
-    lines.first
-  end
-
-  def self.max_columns(window)
-    lines = []
-    columns = []
-    window.getmaxyx(lines, columns)
-
-    columns.first
   end
 end
 

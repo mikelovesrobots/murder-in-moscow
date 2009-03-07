@@ -1,7 +1,5 @@
 require 'ncurses'
+require 'active_support'
 require 'lib/mim'
 
-Mim.initialize_ncurses do |window|
-  Mim.initialize_game(window)
-end
-
+Mim.new
