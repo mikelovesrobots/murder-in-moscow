@@ -1,6 +1,9 @@
 $LOAD_PATH << File.expand_path(File.dirname(__FILE__))
 
+require 'mim_screen/dimensions'
+require 'mim_screen/text_formatting'
 require 'mim_screen'
+
 require 'screens/menu_screen'
 
 class Mim
