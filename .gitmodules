@@ -1,0 +1,3 @@
+[submodule "doc/ncurses_examples"]
+	path = doc/ncurses_examples
+	url = git://github.com/zdennis/ncurses_examples.git
