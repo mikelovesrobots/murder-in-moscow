@@ -5,6 +5,7 @@ require 'mim_screen/text_formatting'
 require 'mim_screen'
 
 require 'screens/menu_screen'
+require 'screens/play_screen'
 
 class Mim
   def initialize

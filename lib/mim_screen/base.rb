@@ -12,7 +12,10 @@ module MimScreen
 
       parent_window.refresh
       main_loop(screen)
-      screen.delwin
+      
+      before_destroy_screen
+      destroy_screen
+      after_destroy_screen
     end
 
     # Override for fun and profit
@@ -28,6 +31,16 @@ module MimScreen
 
     # Override for fun and profit
     def after_render_screen
+    end
+
+    def before_destroy_screen
+    end
+
+    def destroy_screen
+      screen.delwin
+    end
+
+    def after_destroy_screen
     end
 
     # Responsible for doing whatever this screen is supposed to do 

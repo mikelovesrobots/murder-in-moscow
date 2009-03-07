@@ -7,5 +7,7 @@ class MenuScreen < MimScreen::Base
   def main_loop(screen)
     # wait for a keystroke
     screen.getch 
+
+    PlayScreen.new screen
   end
 end
