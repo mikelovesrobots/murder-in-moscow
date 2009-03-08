@@ -1,26 +1,36 @@
 class PlayScreen < MimScreen::Base
   attr_accessor :messages_screen, :map_screen, :status_screen
+  attr_accessor :messages_border_screen, :map_border_screen, :status_border_screen
 
   def after_render_screen
     screen.erase
 
-    [:messages_screen, :map_screen, :status_screen].each do |attr|
-      dim = send("#{attr}_dimensions")
-
-      send("#{attr}=", returning(screen.subwin(dim[:lines], dim[:cols], dim[:y], dim[:x])) do |sub_screen|
-        sub_screen.border(0,0,0,0,0,0,0,0)
-      end)
-    end
+    self.messages_border_screen = create_border_screen(messages_screen_dimensions)
+    self.messages_screen = create_sub_screen(messages_border_screen, messages_screen_dimensions)
+    
+    self.map_border_screen = create_border_screen(map_screen_dimensions)
+    self.map_screen = create_sub_screen(map_border_screen, map_screen_dimensions)
+    
+    self.status_border_screen = create_border_screen(status_screen_dimensions)
+    self.status_screen = create_sub_screen(status_border_screen, status_screen_dimensions)
 
     messages_screen.scrollok(true)
     screen.keypad(true)
     screen.refresh
   end
 
+  def create_sub_screen(window, dimensions)
+    window.subwin(dimensions[:lines]-2, dimensions[:cols]-2, dimensions[:y]+1, dimensions[:x]+1)
+  end
+
+  def create_border_screen(dimensions)
+    returning(screen.subwin(dimensions[:lines], dimensions[:cols], dimensions[:y], dimensions[:x])) do |sub_screen|
+      sub_screen.box(0,0)
+    end
+  end
+
   def before_destroy_screen
-    map_screen.delwin
-    status_screen.delwin
-    messages_screen.delwin
+    [map_screen, map_border_screen, status_screen, status_border_screen, messages_screen, messages_border_screen].each(&:delwin)
   end
 
   def main_loop(screen)
@@ -29,13 +39,13 @@ class PlayScreen < MimScreen::Base
       messages_screen.refresh
       case key = screen.getch 
       when Ncurses::KEY_DOWN
-        messages_screen.addstr("down\n")
+        messages_screen.addstr("\ndown")
       when Ncurses::KEY_UP
-        messages_screen.addstr("up\n")
+        messages_screen.addstr("\nup")
       when Ncurses::KEY_RIGHT
-        messages_screen.addstr("right\n")
+        messages_screen.addstr("\nright")
       when Ncurses::KEY_LEFT
-        messages_screen.addstr("left\n")
+        messages_screen.addstr("\nleft")
       else 
         # we're done, exit
         break
