@@ -1,10 +1,60 @@
 class PlayScreen < MimScreen::Base
+
+  ##
+  ## Keyboard input
+  ##
+
+  def main_loop(screen)
+    # wait for a keystroke
+    loop do
+      messages_screen.refresh
+      case key = screen.getch 
+      when Ncurses::KEY_DOWN
+        move_player(:south)
+      when Ncurses::KEY_UP
+        move_player(:north)
+      when Ncurses::KEY_RIGHT
+        move_player(:east)
+      when Ncurses::KEY_LEFT
+        move_player(:west)
+      else 
+        # we're done, exit
+        break
+      end
+    end
+  end
+
+  def move_player(direction)
+    case direction
+    when :south
+      @player_y += 1 unless @player_y >= map_screen.getmaxy - 1
+    when :north
+      @player_y -= 1 unless @player_y <= 0
+    when :west
+      @player_x -= 1 unless @player_x <= 0
+    when :east
+      @player_x += 1 unless @player_x >= map_screen.getmaxx - 1
+    end
+
+    map_screen.erase
+    map_screen.mvaddch(@player_y, @player_x, ?@)
+    map_screen.refresh
+
+    messages_screen.addstr("Player moved #{direction}\n")
+    messages_screen.refresh
+  end
+
+  ##
+  ## Screen setup
+  ##
+
   attr_accessor :messages_screen, :map_screen, :status_screen
   attr_accessor :messages_border_screen, :map_border_screen, :status_border_screen
 
   def after_render_screen
     screen.erase
 
+    # setup subscreens
     self.messages_border_screen = create_border_screen(messages_screen_dimensions)
     self.messages_screen = create_sub_screen(messages_border_screen, messages_screen_dimensions)
     
@@ -17,6 +67,9 @@ class PlayScreen < MimScreen::Base
     messages_screen.scrollok(true)
     screen.keypad(true)
     screen.refresh
+
+    @player_x = map_screen.getmaxx/2
+    @player_y = map_screen.getmaxy/2
   end
 
   def create_sub_screen(window, dimensions)
@@ -31,26 +84,6 @@ class PlayScreen < MimScreen::Base
 
   def before_destroy_screen
     [map_screen, map_border_screen, status_screen, status_border_screen, messages_screen, messages_border_screen].each(&:delwin)
-  end
-
-  def main_loop(screen)
-    # wait for a keystroke
-    loop do
-      messages_screen.refresh
-      case key = screen.getch 
-      when Ncurses::KEY_DOWN
-        messages_screen.addstr("\ndown")
-      when Ncurses::KEY_UP
-        messages_screen.addstr("\nup")
-      when Ncurses::KEY_RIGHT
-        messages_screen.addstr("\nright")
-      when Ncurses::KEY_LEFT
-        messages_screen.addstr("\nleft")
-      else 
-        # we're done, exit
-        break
-      end
-    end
   end
 
   private
