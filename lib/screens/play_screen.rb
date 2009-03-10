@@ -1,4 +1,5 @@
 class PlayScreen < MimScreen::Base
+  attr_accessor :level
 
   ##
   ## Keyboard input
@@ -40,8 +41,7 @@ class PlayScreen < MimScreen::Base
     map_screen.mvaddch(@player_y, @player_x, ?@)
     map_screen.refresh
 
-    messages_screen.addstr("Player moved #{direction}\n")
-    messages_screen.refresh
+    say "Player moved #{direction} (#{@player_x}, #{@player_y})"
   end
 
   ##
@@ -65,11 +65,21 @@ class PlayScreen < MimScreen::Base
     self.status_screen = create_sub_screen(status_border_screen, status_screen_dimensions)
 
     messages_screen.scrollok(true)
+    messages_screen.addstr("Initializing Game")
+    messages_screen.refresh
+
     screen.keypad(true)
     screen.refresh
 
     @player_x = map_screen.getmaxx/2
     @player_y = map_screen.getmaxy/2
+    
+    self.level = Level.new(self)
+  end
+
+  def say(message)
+    messages_screen.addstr("\n#{message}")
+    messages_screen.refresh
   end
 
   def create_sub_screen(window, dimensions)
