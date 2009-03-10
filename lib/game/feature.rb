@@ -2,11 +2,16 @@ class Feature
   attr_accessor :icon, :name, :blocked
   alias :blocked? :blocked
 
-  def self.rand
-    returning(new) do |feature|
-      feature.name = "Grass"
-      feature.icon = Icon.rand
-      feature.blocked = [true, false, false, false, false].rand
+  def initialize(attributes={})
+    attributes.each do |attr, value|
+      instance_variable_set("@#{attr}", value)
     end
+  end
+
+  def self.rand
+    grass = { :icon => Icon.grass, :blocked => false }
+    rock_wall = { :icon => Icon.rock_wall, :blocked => true }
+
+    new [grass, grass, grass, grass, rock_wall].rand
   end
 end

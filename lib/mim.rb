@@ -39,7 +39,7 @@ class Mim
       
       Ncurses.start_color
       Ncurses.init_pair 1, Ncurses::COLOR_WHITE, Ncurses::COLOR_BLACK
-      Ncurses.init_pair 2, Ncurses::COLOR_YELLOW, Ncurses::COLOR_BLACK
+      Ncurses.init_pair 2, Ncurses::COLOR_GREEN, Ncurses::COLOR_BLACK
       Ncurses.init_pair 3, Ncurses::COLOR_YELLOW, Ncurses::COLOR_BLUE
       Ncurses.init_pair 4, Ncurses::COLOR_YELLOW, Ncurses::COLOR_GREEN
      

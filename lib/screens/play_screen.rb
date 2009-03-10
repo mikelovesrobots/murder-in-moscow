@@ -28,16 +28,19 @@ class PlayScreen < MimScreen::Base
   def move_player(direction)
     case direction
     when :south
-      @player_y += 1 unless @player_y >= map_screen.getmaxy - 1
+      @player_y += 1 unless @player_y >= map_screen.getmaxy - 1 or level.blocked?(@player_x, @player_y + 1)
     when :north
-      @player_y -= 1 unless @player_y <= 0
+      @player_y -= 1 unless @player_y <= 0 or level.blocked?(@player_x, @player_y - 1)
     when :west
-      @player_x -= 1 unless @player_x <= 0
+      @player_x -= 1 unless @player_x <= 0 or level.blocked?(@player_x - 1, @player_y)
     when :east
-      @player_x += 1 unless @player_x >= map_screen.getmaxx - 1
+      @player_x += 1 unless @player_x >= map_screen.getmaxx - 1 or level.blocked?(@player_x + 1, @player_y)
     end
 
-    map_screen.erase
+    level.display_map
+    #map_screen.erase
+
+    map_screen.attrset(Ncurses.COLOR_PAIR(1))
     map_screen.mvaddch(@player_y, @player_x, ?@)
     map_screen.refresh
 
