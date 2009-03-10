@@ -1,5 +1,7 @@
 $LOAD_PATH << File.expand_path(File.dirname(__FILE__))
 
+require 'extras/shadowcasting_field_of_view'
+
 require 'mim_screen/dimensions'
 require 'mim_screen/text_formatting'
 require 'mim_screen'
