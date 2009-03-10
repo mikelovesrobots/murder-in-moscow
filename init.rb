@@ -2,7 +2,7 @@ require 'ncurses'
 require 'active_support'
 require 'lib/mim'
 
-DEBUG = true
+DEBUG = false
 
 if DEBUG
   require 'ruby-debug'
