@@ -37,11 +37,12 @@ class PlayScreen < MimScreen::Base
       @player_x += 1 unless @player_x >= map_screen.getmaxx - 1 or level.blocked?(@player_x + 1, @player_y)
     end
 
-    level.do_fov(@player_x, @player_y, 6)
+    level.do_fov(@player_x, @player_y, 7)
     level.display_map
     #map_screen.erase
 
-    map_screen.attrset(Ncurses.COLOR_PAIR(1))
+    map_screen.attron(Ncurses::A_BOLD)
+    map_screen.attrset(Ncurses.COLOR_PAIR(3))
     map_screen.mvaddch(@player_y, @player_x, ?@)
     map_screen.refresh
 

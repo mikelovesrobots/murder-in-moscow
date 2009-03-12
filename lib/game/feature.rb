@@ -12,6 +12,10 @@ class Feature
     grass = { :icon => Icon.grass, :blocked => false }
     rock_wall = { :icon => Icon.rock_wall, :blocked => true }
 
-    new [grass, grass, grass, grass, rock_wall].rand
+    new [grass, grass, grass, grass, grass, rock_wall].rand
+  end
+
+  def self.rock_wall
+    new :icon => Icon.rock_wall, :blocked => true 
   end
 end

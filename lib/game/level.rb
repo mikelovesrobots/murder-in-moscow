@@ -8,13 +8,17 @@ class Level
     self.play_screen = play_screen
 
     self.grid = []
-    (0..play_screen.map_screen.getmaxx).each do |x|
+    (0...play_screen.map_screen.getmaxx).each do |x|
       self.grid[x] = []
-      (0..play_screen.map_screen.getmaxy).each do |y|
-        self.grid[x][y] = Tile.rand
+      (0...play_screen.map_screen.getmaxy).each do |y|
+        if x == 0 or x == play_screen.map_screen.getmaxx - 1 or y == 0 or y == play_screen.map_screen.getmaxy - 1
+          self.grid[x][y] = Tile.rock_wall
+        else
+          self.grid[x][y] = Tile.rand
+        end
       end
     end
-    play_screen.say("Done!")
+    play_screen.say("Done! Press an arrow key to start.")
   end
 
   def display_map
