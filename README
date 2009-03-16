@@ -1,14 +1,14 @@
 7DRL Attempt: Murder in Moscow
 
-Murder in Moscow will be a supernatural RL set in the afterlife.
+Murder in Moscow will be a zombie horror RL.
 
 Naively Hopeful Features:
 
-* Play as an angel or demon 
-* Crawl up to heaven or down to hell
-* Rooms have words embedded in the walls  (e.g., XMURDERXX+XXXXRAGEXX)
-* Ghosts say phrases extracted from Twitter
-* Standard stuff (items, monsters, fighting, magic)
+* Play as a survivor
+* Build and tear down walls
+* During the night, visibility is limity and zombies swarm
+* Mental health meter, words start becoming embedded in the walls if your player witnesses too much gore (e.g., XMURDERXX+XXXXRAGEXX)
+* Zombies moan zombified tweets extracted from Twitter
 
 I'm going to build it in ruby using ncurses. (By the way, last night,
 I discovered a fantastic set of ruby ncurses examples at: 
